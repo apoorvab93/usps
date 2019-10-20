@@ -41,6 +41,7 @@ def pca_and_reconstruct(num_components, images, labels):
     plt.show()
 
 def load_usps():
+    # replace the path below with the path of USPS.mat on your machine
     usps_data = loadmat('C:\\repos\\qna\\src\\atasks\\USPS')
     print(f'USPS data keys - {usps_data.keys()}')
     return usps_data
