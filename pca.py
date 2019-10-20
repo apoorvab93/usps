@@ -6,6 +6,11 @@ from sklearn.datasets import load_digits
 from scipy.io import loadmat
 from sklearn.metrics import mean_squared_error
 
+from numpy import array
+from numpy import mean
+from numpy import cov
+from numpy.linalg import eig
+
 def pca_and_reconstruct(num_components, images, labels):
     pca = PCA(num_components)
     pca_project = pca.fit_transform(images)
@@ -39,6 +44,25 @@ def pca_and_reconstruct(num_components, images, labels):
     plt.matshow(second_last_image.reshape(16,16))
     plt.matshow(second_last_image_reconstructed.reshape(16,16))
     plt.show()
+
+#own implementation of PCA using eigen vectors
+def pca_own(data):
+    mean_data = mean(data.T, axis=1)
+    print(mean_data)
+
+    center = data - mean_data
+    print(center)
+
+    variance = cov(center.T)
+    print(variance)
+
+    values, vectors = eig(variance)
+    print(values)
+    print(vectors)
+
+    pca = vectors.T.dot(center.T)
+    return pca
+
 
 def load_usps():
     # replace the path below with the path of USPS.mat on your machine
@@ -87,6 +111,8 @@ def three():
     pca.fit(data)
     print("PCA component calculated:", pca.components_)    
     print("PCA explained variance:", pca.explained_variance_)
+
+    pca_own= pca_own(data)
 
     first_component = pca.transform(data)
 
